@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=480
 window/size/viewport_height=270
+window/size/mode=2
 window/stretch/aspect="expand"
 window/per_pixel_transparency/allowed=true
 
@@ -26,6 +27,7 @@ window/per_pixel_transparency/allowed=true
 
 mushroom=""
 tree=""
+dog=""
 
 [physics]
 

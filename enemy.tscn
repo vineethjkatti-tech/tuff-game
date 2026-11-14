@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dbtu1x5bimeov"]
+
+[ext_resource type="Script" uid="uid://cv01l6vgerdq4" path="res://enemy.gd" id="1_4gyqm"]
+[ext_resource type="Texture2D" uid="uid://df4obdx02v0um" path="res://porcupine-removebg-preview.png" id="1_7k104"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hewpr"]
+
+[node name="Enemy" type="Area2D" unique_id=1024668491]
+script = ExtResource("1_4gyqm")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=186837644]
+position = Vector2(372.5, 166.50002)
+scale = Vector2(0.07800001, 0.07800001)
+texture = ExtResource("1_7k104")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=469986348]
+position = Vector2(372, 167)
+shape = SubResource("CircleShape2D_hewpr")

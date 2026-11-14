@@ -1,7 +1,10 @@
 extends CharacterBody2D
 
+
+@onready var age_label: Label = get_tree().current_scene.find_child("AgeLabel", true, false)
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D # Change to Sprite2D if not animated
 
+var can_move: bool = false # Starts false until the intro animation finishes!
 var speed: float = 250.0
 var checkpoint_pos: Vector2
 var jump_velocity: float = -420.0
@@ -18,6 +21,10 @@ func _ready() -> void:
 	update_age_stats()
 
 func _physics_process(delta: float) -> void:
+	
+	if not can_move:
+		return
+	
 	# 1. Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * gravity_multiplier * delta
@@ -55,6 +62,7 @@ func _physics_process(delta: float) -> void:
 	sprite.scale.x = lerp(1.0, 1.25, charge_ratio)
 
 	move_and_slide()
+	update_animation(direction)
 	
 	# Respawn if the dog falls 350 pixels below its checkpoint
 	if global_position.y > checkpoint_pos.y + 350.0:
@@ -79,28 +87,58 @@ func set_age(new_age: int) -> void:
 	update_age_stats()
 
 func update_age_stats() -> void:
+	var stage_name := "Puppy"
 	if age <= 2: # Puppy
+		stage_name = "Puppy"
 		speed = 330.0
 		jump_velocity = -300.0
 		min_bounce = -200.0
 		max_bounce = -700.0
 		gravity_multiplier = 0.85
+		sprite.modulate = Color(1, 1, 1)
 	elif age <= 8: # Adult
+		stage_name = "Adult"
 		speed = 280.0
 		jump_velocity = -270.0
 		min_bounce = -150.0
 		max_bounce = -500.0
 		gravity_multiplier = 1.0
+		sprite.modulate = Color(1, 1, 1)
 	else: # Senior
+		stage_name = "Senior"
 		speed = 210.0
 		jump_velocity = -140.0
 		min_bounce = -320.0
 		max_bounce = -640.0
 		gravity_multiplier = 1.15
-		
+		sprite.modulate = Color(0.75, 0.78, 0.85) # Grey muzzle tint!
+
+	if age_label:
+		age_label.text = "Age: %d yrs (%s)" % [age, stage_name]
+
+func take_damage_and_respawn() -> void:
+	respawn_at_checkpoint()
+
 func respawn_at_checkpoint() -> void:
 	velocity = Vector2.ZERO
 	charge_ratio = 0.0
 	global_position = checkpoint_pos
 	set_age(age + 1) # Lose 1 year of life on death!
+	if age >= 13:
+		get_tree().reload_current_scene()
 	print("Respawned! Dog age is now: ", age)
+	
+func update_animation(direction: float) -> void:
+	if not is_on_floor():
+		if sprite.sprite_frames.has_animation("jump"):
+			sprite.play("jump")
+		else:
+			sprite.play("walk")
+	elif abs(direction) > 0.0:
+		sprite.play("walk")
+	else:
+		if sprite.sprite_frames.has_animation("idle"):
+			sprite.play("idle")
+		else:
+			sprite.stop()
+			sprite.frame = 0
