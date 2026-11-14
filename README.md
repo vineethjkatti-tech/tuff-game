@@ -57,8 +57,10 @@ Your age when you reach the hut decides the ending:
 
 ## Credits
 
-Dog sprites, logo and forest background art from google
+Dog sprites, logo and forest background art from itch
 Created by 
 Vineeth Jakin Katti
 Aaron Savin Thomas
 Sai Nehru Tatavarthi
+
+### Goo watch the launch vid hereeee: https://youtu.be/ont004vw2zE?si=HIAKsthPwAw1QkVb
