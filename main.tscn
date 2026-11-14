@@ -13,6 +13,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hewpr"]
 size = Vector2(481, 22)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6vh84"]
+size = Vector2(12, 248)
+
 [node name="Node2D" type="Node2D" unique_id=31836382]
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=1836310597]
@@ -39,6 +42,10 @@ offset_top = 249.0
 offset_right = 479.0
 offset_bottom = 271.0
 color = Color(0.4572717, 0.21104574, 0, 1)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Ground" unique_id=402792855]
+position = Vector2(6, 124)
+shape = SubResource("RectangleShape2D_6vh84")
 
 [node name="Dog" parent="." unique_id=1742032735 instance=ExtResource("2_h2yge")]
 position = Vector2(59, 93)

@@ -98,6 +98,8 @@ monitorable = false
 
 [node name="Enemy2" parent="." unique_id=1193613988 instance=ExtResource("5_6nf7s")]
 position = Vector2(-20, -81)
+monitoring = false
+monitorable = false
 vertical_patrol = true
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
