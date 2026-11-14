@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cwn4diinike5l"]
+
+[ext_resource type="Texture2D" uid="uid://cid77ysvvh2n1" path="res://mushroom.png" id="1_gvsd5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
+size = Vector2(626.3917, 505.1541)
+
+[node name="Mushroom" type="StaticBody2D" unique_id=1836752027 groups=["mushroom"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=869114321]
+texture_filter = 1
+scale = Vector2(0.049489863, 0.049489863)
+texture = ExtResource("1_gvsd5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1768473777]
+scale = Vector2(0.049489863, 0.049489863)
+shape = SubResource("RectangleShape2D_7mycd")

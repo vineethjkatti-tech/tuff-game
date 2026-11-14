@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://dh2rt38r6hgi4"]
+
+[ext_resource type="PackedScene" uid="uid://kttjc2v7yqdj" path="res://dog.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://cwn4diinike5l" path="res://mushroom.tscn" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://bymiesqik3dbt" path="res://camera.gd" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://cqt1e4i4epoi3" path="res://tree.tscn" id="4_lquwl"]
+[ext_resource type="PackedScene" uid="uid://72efut2rf1v4" path="res://mountain_chunk.tscn" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://4yhihedqpeqq" path="res://infinite_spawner.gd" id="6_7mycd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hewpr"]
+size = Vector2(481, 22)
+
+[node name="Node2D" type="Node2D" unique_id=31836382]
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=1903326720]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=1262004906]
+position = Vector2(239.5, 260)
+shape = SubResource("RectangleShape2D_hewpr")
+
+[node name="ColorRect" type="ColorRect" parent="Ground" unique_id=1823888021]
+offset_left = -1.0
+offset_top = 249.0
+offset_right = 479.0
+offset_bottom = 271.0
+color = Color(0.4572717, 0.21104574, 0, 1)
+
+[node name="Dog" parent="." unique_id=1742032735 instance=ExtResource("2_h2yge")]
+position = Vector2(59, 93)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=906143667 node_paths=PackedStringArray("target")]
+zoom = Vector2(2, 2)
+script = ExtResource("3_h2yge")
+target = NodePath("../Dog")
+look_ahead_offset = Vector2(40, -20)
+
+[node name="Mushroom" parent="." unique_id=1836752027 instance=ExtResource("3_1bvp3")]
+position = Vector2(73, 67)
+
+[node name="Tree" parent="." unique_id=1876881249 instance=ExtResource("4_lquwl")]
+position = Vector2(35, -22)
+
+[node name="TileMapLayer" parent="." unique_id=2048308468 instance=ExtResource("5_7mycd")]
+texture_filter = 1
+
+[node name="InfiniteSpawner" type="Node2D" parent="." unique_id=1667998706 node_paths=PackedStringArray("dog")]
+script = ExtResource("6_7mycd")
+dog = NodePath("../Dog")
+spawn_scenes = Array[PackedScene]([ExtResource("4_lquwl"), ExtResource("4_lquwl"), ExtResource("3_1bvp3")])
+step_x = 65.0
+step_y = 45.0
+random_spread = Vector2(15, 10)

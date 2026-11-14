@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cqt1e4i4epoi3"]
+
+[ext_resource type="Texture2D" uid="uid://cf76op5wpq6cw" path="res://tree branch.png" id="1_brfkd"]
+[ext_resource type="Script" uid="uid://dkh8t33ca553h" path="res://prop_cleanup.gd" id="1_nnvrw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6vh84"]
+size = Vector2(579.9999, 212.75018)
+
+[node name="Tree" type="StaticBody2D" unique_id=1876881249 groups=["tree"]]
+script = ExtResource("1_nnvrw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1328722683]
+scale = Vector2(0.10344827, 0.10344828)
+texture = ExtResource("1_brfkd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1221849653]
+scale = Vector2(0.10344831, 0.1034483)
+shape = SubResource("RectangleShape2D_6vh84")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=378100297]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

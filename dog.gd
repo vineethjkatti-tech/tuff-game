@@ -1,0 +1,106 @@
+extends CharacterBody2D
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D # Change to Sprite2D if not animated
+
+var speed: float = 250.0
+var checkpoint_pos: Vector2
+var jump_velocity: float = -420.0
+var min_bounce: float = -450.0
+var max_bounce: float = -820.0
+var gravity_multiplier: float = 1.0
+
+var charge_ratio: float = 0.0
+var charge_speed: float = 1.8
+var age: int = 1 # 0-2: Puppy, 3-8: Adult, 9+: Senior
+
+func _ready() -> void:
+	checkpoint_pos = global_position
+	update_age_stats()
+
+func _physics_process(delta: float) -> void:
+	# 1. Gravity
+	if not is_on_floor():
+		velocity += get_gravity() * gravity_multiplier * delta
+
+	# 2. Hold Spacebar in mid-air (or on ground) to charge a bounce
+	if Input.is_action_pressed("ui_accept"):
+		charge_ratio = move_toward(charge_ratio, 1.0, charge_speed * delta)
+	else:
+		charge_ratio = move_toward(charge_ratio, 0.0, charge_speed * 2.0 * delta)
+
+	# 3. Check what we landed on when touching a floor/surface
+	if is_on_floor():
+		var bounce_boost: float = get_bounce_object_multiplier()
+		
+		if bounce_boost > 0.0:
+			# Landed on a bouncy object (tree, mushroom, snow, etc.) -> BOUNCE!
+			var bounce_power = lerp(min_bounce, max_bounce, charge_ratio)
+			velocity.y = bounce_power * bounce_boost
+			charge_ratio = 0.0
+		elif Input.is_action_just_pressed("ui_accept"):
+			# Standing on regular Ground -> Only jump when Spacebar is pressed!
+			velocity.y = jump_velocity
+			charge_ratio = 0.0
+
+	# 4. Left / Right movement & air steering
+	var direction := Input.get_axis("ui_left", "ui_right")
+	if direction:
+		velocity.x = move_toward(velocity.x, direction * speed, speed * 8.0 * delta)
+		sprite.flip_h = direction < 0
+	else:
+		velocity.x = move_toward(velocity.x, 0, speed * 5.0 * delta)
+
+	# 5. Squash & stretch visual feedback while charging
+	sprite.scale.y = lerp(1.0, 0.75, charge_ratio)
+	sprite.scale.x = lerp(1.0, 1.25, charge_ratio)
+
+	move_and_slide()
+	
+	# Respawn if the dog falls 350 pixels below its checkpoint
+	if global_position.y > checkpoint_pos.y + 350.0:
+		respawn_at_checkpoint()
+
+# Returns > 0.0 ONLY if the collided object is in a bouncy group
+func get_bounce_object_multiplier() -> float:
+	for i in get_slide_collision_count():
+		var collider = get_slide_collision(i).get_collider()
+		if not collider:
+			continue
+		if collider.is_in_group("mushroom"):
+			return 1.35 # High bounce!
+		elif collider.is_in_group("tree"):
+			return 1.1 # Standard bounce off tree branches!
+		elif collider.is_in_group("snow"):
+			return 0.7 # Soft bounce on snow
+	return 0.0 # Regular ground -> Do NOT auto-bounce
+
+func set_age(new_age: int) -> void:
+	age = max(0, new_age)
+	update_age_stats()
+
+func update_age_stats() -> void:
+	if age <= 2: # Puppy
+		speed = 330.0
+		jump_velocity = -300.0
+		min_bounce = -200.0
+		max_bounce = -700.0
+		gravity_multiplier = 0.85
+	elif age <= 8: # Adult
+		speed = 280.0
+		jump_velocity = -270.0
+		min_bounce = -150.0
+		max_bounce = -500.0
+		gravity_multiplier = 1.0
+	else: # Senior
+		speed = 210.0
+		jump_velocity = -140.0
+		min_bounce = -320.0
+		max_bounce = -640.0
+		gravity_multiplier = 1.15
+		
+func respawn_at_checkpoint() -> void:
+	velocity = Vector2.ZERO
+	charge_ratio = 0.0
+	global_position = checkpoint_pos
+	set_age(age + 1) # Lose 1 year of life on death!
+	print("Respawned! Dog age is now: ", age)
