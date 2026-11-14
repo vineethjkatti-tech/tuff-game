@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://ctvyhrxka7uck"]
+
+[ext_resource type="Texture2D" uid="uid://cv4wigoyi4i0" path="res://TeMjX6.jpg.jpeg" id="1_06t4h"]
+[ext_resource type="Script" uid="uid://c8lw51mcsw3j4" path="res://main_menu.gd" id="1_7vrkn"]
+[ext_resource type="Texture2D" uid="uid://rbfchqdog8ac" path="res://WhatsApp_Image_2026-11-14_at_10.40.57_AM-removebg-preview.png" id="3_fu7sn"]
+
+[node name="MainMenu" type="Control" unique_id=943642908]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7vrkn")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1974824210]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_06t4h")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=766748627]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -124.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 12
+
+[node name="PlayButton" type="Button" parent="VBoxContainer" unique_id=703788782]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Play"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=2118358243]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Quit"
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer" unique_id=931015741]
+position = Vector2(990, -626)
+scale = Vector2(1.6919999, 1.6919999)
+texture = ExtResource("3_fu7sn")
+
+[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

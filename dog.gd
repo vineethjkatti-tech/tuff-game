@@ -3,6 +3,11 @@ extends CharacterBody2D
 
 @onready var age_label: Label = get_tree().current_scene.find_child("AgeLabel", true, false)
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D # Change to Sprite2D if not animated
+@onready var game_over_menu: Control = get_tree().current_scene.find_child("GameOverMenu", true, false)
+@onready var bg_music: AudioStreamPlayer = get_tree().current_scene.find_child("BGMusic", true, false)
+@export var game_over_video: VideoStream # Drag gameover.ogv here in the Inspector!
+@onready var cutscene_player: VideoStreamPlayer = get_tree().current_scene.find_child("CutscenePlayer", true, false)
+
 
 var can_move: bool = false # Starts false until the intro animation finishes!
 var speed: float = 250.0
@@ -122,11 +127,32 @@ func take_damage_and_respawn() -> void:
 func respawn_at_checkpoint() -> void:
 	velocity = Vector2.ZERO
 	charge_ratio = 0.0
-	global_position = checkpoint_pos
 	set_age(age + 1) # Lose 1 year of life on death!
-	if age >= 13:
-		get_tree().reload_current_scene()
+	if age >= 12:
+		trigger_game_over()
+		return
+	global_position = checkpoint_pos
 	print("Respawned! Dog age is now: ", age)
+
+func trigger_game_over() -> void:
+	if "can_move" in self:
+		can_move = false
+	velocity = Vector2.ZERO
+	if bg_music:
+		bg_music.stop()
+	if cutscene_player and game_over_video:
+		cutscene_player.visible = true
+		cutscene_player.stream = game_over_video
+		cutscene_player.play()
+
+
+func _on_retry_button_pressed() -> void:
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+
+func _on_menu_button_pressed() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://main_menu.tscn")
 	
 func update_animation(direction: float) -> void:
 	if not is_on_floor():

@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://4yhihedqpeqq" path="res://infinite_spawner.gd" id="6_7mycd"]
 [ext_resource type="VideoStream" uid="uid://b5exau3hs0xj" path="res://start.ogv" id="6_272bh"]
 [ext_resource type="AudioStream" uid="uid://dainhaw0sf7ku" path="res://BGMusic.mp3" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://ckkabshmhfequ" path="res://pause_menu.gd" id="9_kek77"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hewpr"]
 size = Vector2(481, 22)
@@ -56,7 +57,6 @@ script = ExtResource("6_7mycd")
 dog = NodePath("../Dog")
 mountain_chunk_scene = ExtResource("5_7mycd")
 ending_video = ExtResource("6_5vw27")
-total_chunks_to_summit = 40
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=314188341]
 
@@ -87,7 +87,141 @@ stream = ExtResource("6_272bh")
 autoplay = true
 expand = true
 
+[node name="EndMenu" type="PanelContainer" parent="CutsceneLayer" unique_id=1286298481]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CutsceneLayer/EndMenu" unique_id=432622035]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="WinLabel" type="Label" parent="CutsceneLayer/EndMenu/VBoxContainer" unique_id=639733194]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "good boy came back!!"
+horizontal_alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="CutsceneLayer/EndMenu/VBoxContainer" unique_id=1610163979]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "play again?
+"
+flat = true
+
 [node name="BGMusic" type="AudioStreamPlayer" parent="." unique_id=1336731290]
 stream = ExtResource("8_5vw27")
 
+[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=985323919]
+process_mode = 3
+layer = 20
+
+[node name="PauseMenu" type="Control" parent="PauseLayer" unique_id=1179151974]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_kek77")
+
+[node name="ColorRect" type="ColorRect" parent="PauseLayer/PauseMenu" unique_id=687741143]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.815, 0.815, 0.815, 0.675)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseLayer/PauseMenu" unique_id=1441602821]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="PauseLayer/PauseMenu/VBoxContainer" unique_id=597712248]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="PauseLayer/PauseMenu/VBoxContainer" unique_id=272798488]
+layout_mode = 2
+text = "Resume
+"
+
+[node name="RestartButton" type="Button" parent="PauseLayer/PauseMenu/VBoxContainer" unique_id=1479704664]
+layout_mode = 2
+text = "Restart"
+
+[node name="MainMenuButton" type="Button" parent="PauseLayer/PauseMenu/VBoxContainer" unique_id=1931617924]
+layout_mode = 2
+text = "Main Menu
+"
+
+[node name="GameOverMenu" type="Control" parent="PauseLayer" unique_id=302758571]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PauseLayer/GameOverMenu" unique_id=1476627533]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(24.99652, 8.793697, 7.2106624, 0.59607846)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseLayer/GameOverMenu" unique_id=1812111079]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="GameOverLabel" type="Label" parent="PauseLayer/GameOverMenu/VBoxContainer" unique_id=173870366]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "GAME OVER!!"
+
+[node name="SubLabel" type="Label" parent="PauseLayer/GameOverMenu/VBoxContainer" unique_id=1600057554]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "12 years passed... he never made it home.
+"
+
+[node name="RetryButton" type="Button" parent="PauseLayer/GameOverMenu/VBoxContainer" unique_id=302363829]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Try Again"
+
+[node name="MenuButton" type="Button" parent="PauseLayer/GameOverMenu/VBoxContainer" unique_id=521972211]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Main Menu"
+
 [connection signal="finished" from="CutsceneLayer/CutscenePlayer" to="InfiniteSpawner" method="_on_cutscene_player_finished"]
+[connection signal="pressed" from="PauseLayer/PauseMenu/VBoxContainer/ResumeButton" to="PauseLayer/PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseLayer/PauseMenu/VBoxContainer/RestartButton" to="PauseLayer/PauseMenu" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="PauseLayer/PauseMenu/VBoxContainer/MainMenuButton" to="PauseLayer/PauseMenu" method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="PauseLayer/GameOverMenu/VBoxContainer/RetryButton" to="Dog" method="_on_retry_button_pressed"]
+[connection signal="pressed" from="PauseLayer/GameOverMenu/VBoxContainer/MenuButton" to="Dog" method="_on_menu_button_pressed"]

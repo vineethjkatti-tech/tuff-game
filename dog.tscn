@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://buxf4kgptwfrc" path="res://spritesheet_brown.png" id="1_f50pn"]
 [ext_resource type="Script" uid="uid://b7rffeuo7vj6g" path="res://dog.gd" id="1_ij6vw"]
+[ext_resource type="VideoStream" uid="uid://c8gm1ydgl40h" path="res://WhatsApp Video 2026-11-14 at 5.10.36 PM.ogv" id="2_ptela"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jqx0s"]
 atlas = ExtResource("1_f50pn")
@@ -110,6 +111,7 @@ size = Vector2(26, 13)
 
 [node name="Dog" type="CharacterBody2D" unique_id=1742032735 groups=["dog"]]
 script = ExtResource("1_ij6vw")
+game_over_video = ExtResource("2_ptela")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=120540419]
 texture_filter = 1

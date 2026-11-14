@@ -9,10 +9,11 @@ extends Node2D
 @export var chunk_width: float = 272.0
 @export var chunk_height: float = 176.0
 @export var total_chunks_to_summit: int = 15  # Ending triggers at chunk 15!
-
+@onready var end_menu: Control = get_tree().current_scene.find_child("EndMenu", true, false)
 @onready var whiteout_rect: ColorRect = $"../CutsceneLayer/WhiteoutRect"
 @onready var cutscene_player: VideoStreamPlayer = get_tree().current_scene.find_child("CutscenePlayer", true, false)
 @onready var end_text_label: Label = get_tree().current_scene.find_child("EndTextLabel", true, false)
+@onready var game_over_menu: Control = get_tree().current_scene.find_child("GameOverMenu", true, false)
 
 var next_chunk_pos: Vector2 = Vector2.ZERO
 var initialized: bool = false
@@ -90,6 +91,13 @@ func play_intro_cutscene() -> void:
 			dog.can_move = true
 
 func _on_cutscene_player_finished() -> void:
+	# 1. Game Over video finished -> show GameOverMenu!
+	if dog and "age" in dog and dog.age >= 12:
+		if game_over_menu:
+			game_over_menu.visible = true
+		return
+
+	# 2. Intro video finished -> hide video and start gameplay
 	if not ending_triggered:
 		if cutscene_player:
 			cutscene_player.visible = false
@@ -99,11 +107,12 @@ func _on_cutscene_player_finished() -> void:
 			bg_music.stream_paused = false
 			if not bg_music.playing:
 				bg_music.play()
+		# 3. Ending video finished -> show EndMenu
 	else:
-		if end_text_label:
-			end_text_label.visible = true
+		if end_menu:
+			end_menu.visible = true
 		can_restart = true
-
+		
 func trigger_ending() -> void:
 	ending_triggered = true
 	if bg_music:
@@ -119,6 +128,9 @@ func trigger_ending() -> void:
 		cutscene_player.stream = ending_video
 		cutscene_player.play()
 	else:
-		if end_text_label:
-			end_text_label.visible = true
-		can_restart = true
+		if end_menu:
+			end_menu.visible = true
+		can_restart = true	
+
+func _on_play_again_button_pressed() -> void:
+	get_tree().reload_current_scene()

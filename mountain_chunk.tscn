@@ -93,6 +93,8 @@ position = Vector2(400, 71)
 
 [node name="Enemy" parent="." unique_id=1024668491 instance=ExtResource("5_6nf7s")]
 position = Vector2(-104, -30)
+monitoring = false
+monitorable = false
 
 [node name="Enemy2" parent="." unique_id=1193613988 instance=ExtResource("5_6nf7s")]
 position = Vector2(-20, -81)
