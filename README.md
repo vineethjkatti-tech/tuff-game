@@ -1,5 +1,9 @@
 # Good Boy, Come Home
 
+
+<img width="500" height="500" alt="WhatsApp_Image_2026-11-14_at_10 40 57_AM-removebg-preview" src="https://github.com/user-attachments/assets/cba8b678-3023-4d5f-9e0b-2e9e617e4280" />
+
+
 A sideways, Sonic-style platformer about a dog bouncing and climbing a mountain to get back to its owner. Built for the game jam Haven Bengaluru on the theme *"Bounce Back"*.
 
 > Walter and his dog Juno climbed the same peak every autumn. This year a storm hit near the summit and the dog slipped off a ledge. Walter refuses to leave the mountain. The dog has to bounce back before winter closes the pass, and every fall costs it a year of its life.
