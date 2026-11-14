@@ -55,6 +55,6 @@ Your age when you reach the hut decides the ending:
 
 Dog sprites, logo and forest background art from google
 Created by 
-Vineeth Jakin Katti
-Aaron Savin Thomas
-Sai Nahru Tatavarthi
+-Vineeth Jakin Katti
+-Aaron Savin Thomas
+-Sai Nahru Tatavarthi
